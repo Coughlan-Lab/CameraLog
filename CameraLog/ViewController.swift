@@ -15,10 +15,15 @@ class ViewController: UIViewController, ARSessionDelegate {
     @IBOutlet weak var sceneView: ARSKView!
     var logger : Logger = Logger()
     var sessionID : String = ""
-    var frameRate : Int = 10
+    var frameRate : Int = 20
     var rec : Bool = false
+    var saveImage : Bool = false
     var frameCnt : UInt64 = 0
     var lastProcessedFrameTime: TimeInterval = TimeInterval()
+    // Time between Unix epcoh and iPhone system boot
+    var offset = NSTimeIntervalSince1970 - ProcessInfo.processInfo.systemUptime
+    var Dinger : SoundPlayer = SoundPlayer()
+    var lastDingTime: TimeInterval = TimeInterval()
 
     @IBOutlet weak var recButton: UIButton!
     
@@ -32,7 +37,7 @@ class ViewController: UIViewController, ARSessionDelegate {
         sceneView.showsFPS = true
         sceneView.showsNodeCount = true
         
-        logger.startSession(sessionID : sessionID)
+        logger.startSession(sessionID : sessionID, setImageSave: saveImage)
         
         // Load the SKScene from 'Scene.sks'
         if let scene = SKScene(fileNamed: "Scene") {
@@ -45,6 +50,7 @@ class ViewController: UIViewController, ARSessionDelegate {
         
         // Create a session configuration
         let configuration = ARWorldTrackingConfiguration()
+        configuration.worldAlignment = .gravity
 
         // Run the view's session
         sceneView.session.run(configuration)
@@ -63,22 +69,35 @@ class ViewController: UIViewController, ARSessionDelegate {
         rec = !rec
         if rec{
             recButton.backgroundColor = .green
-            recButton.setTitle("Pause", for: .normal)
+            recButton.setTitle("Pause Recording", for: .normal)
+            self.Dinger.playRecording()
         }
         else{
             recButton.backgroundColor = .red
-            recButton.setTitle("REC", for: .normal)
+            recButton.setTitle("Start Recording", for: .normal)
+            self.Dinger.playStopped()
         }
     }
     
     func session(_ session: ARSession, didUpdate frame: ARFrame){
-        print(frame.timestamp-lastProcessedFrameTime)
-        print(1000.0/Double(frameRate))
-        if rec && (frame.timestamp-lastProcessedFrameTime) >= (1/Double(frameRate)){
+       //print(1/(frame.timestamp-lastProcessedFrameTime))
+       // print(1000.0/Double(frameRate))
+        if rec && (frame.timestamp-lastProcessedFrameTime) >= (1/Double(frameRate) - 0.01){
 //            logger.saveImage(imageToSave: frame.capturedImage, counter: frameCnt)
             frameCnt += 1
-            logger.logData(currentARFrame: frame, cnt: frameCnt )
+            logger.logData(currentARFrame: frame, cnt: frameCnt, uptimeOffset: self.offset)
             lastProcessedFrameTime = frame.timestamp
+            
+        }
+        // Check if phone is too tilted
+        let yaw = frame.camera.eulerAngles.x
+        if rec && (abs(yaw) > 0.5 && (frame.timestamp-lastDingTime) >= 1) {
+            lastDingTime = frame.timestamp
+            if yaw > 0 {
+                Dinger.playDing()
+            } else {
+                Dinger.playBuzz()
+            }
         }
     }
     

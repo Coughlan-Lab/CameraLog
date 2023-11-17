@@ -13,6 +13,7 @@ class SessionConfig: UIViewController{
     @IBOutlet weak var sessionName: UITextField!
     @IBOutlet weak var frameRateLbl: UILabel!
     
+    @IBOutlet weak var saveImageSwitch: UISwitch!
     @IBOutlet weak var continueButton: UIButton!
     @IBOutlet weak var frameRateSlider: UISlider!
     
@@ -53,6 +54,7 @@ class SessionConfig: UIViewController{
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
         let destVC : ViewController = segue.destination as! ViewController
+        destVC.saveImage = saveImageSwitch.isOn
         destVC.frameRate = Int(frameRateSlider.value)
         destVC.sessionID = sessionName.text!
     }

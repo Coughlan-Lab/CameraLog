@@ -9,6 +9,7 @@
 import Foundation
 import ARKit.ARFrame
 import CoreMotion
+import Vision
 
 class Logger{
     
@@ -19,6 +20,7 @@ class Logger{
     var samplingTime: Double
     var altimeterPressure: Double
     var attitudeMatrix : CMRotationMatrix
+    var saveImage: Bool
     
     init(){
         lastTimeUpdated = 0
@@ -28,14 +30,16 @@ class Logger{
         samplingTime = 0
         altimeterPressure = 0
         attitudeMatrix = CMRotationMatrix()
+        saveImage = false
     }
     
     deinit{
         arkitDataFileHandle.closeFile()
     }
     
-    func startSession(sessionID: String){
+    func startSession(sessionID: String, setImageSave: Bool){
         lastTimeUpdated = 0;
+        saveImage = setImageSave;
         sessionDirectoryURL = try! FileManager().url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
         sessionDirectoryURL = sessionDirectoryURL.appendingPathComponent(sessionID)
         let timestamp = NSDate().timeIntervalSince1970
@@ -64,10 +68,10 @@ class Logger{
         }
     }
     
-    func logData(currentARFrame: ARFrame, cnt: UInt64){
+    func logData(currentARFrame: ARFrame, cnt: UInt64, uptimeOffset: TimeInterval){
         //print("SAMPLING: \(samplingTime)" )
                 
-        lastTimeUpdated = currentARFrame.timestamp
+        lastTimeUpdated = currentARFrame.timestamp + uptimeOffset
         let imageFilename = "\(cnt)"+".jpg"
         let altPressString:String = String(format:"%.8f", self.altimeterPressure)
         let fileURL = sessionDirectoryURL.appendingPathComponent(imageFilename)
@@ -78,11 +82,14 @@ class Logger{
             "\(currentARFrame.camera.transform.columns.3.z)" + "\n" +
             "\(currentARFrame.camera.eulerAngles)" + "\n" +
             "\(altPressString)" + "\n" +
-            "\(attitudeMatrix)" + "\n"
-        
+            "\(attitudeMatrix)" + "\n" +
+            "intrinsics: \(currentARFrame.camera.intrinsics)" + "\n" +
+            "\(currentARFrame.camera.projectionMatrix)\n"
         self.appendToFile(stringToAppend: currTransform, fileHandle: arkitDataFileHandle)
         //self.saveUIImage(imageToSave: scaledFrame, saveTo: fileURL)
-        self.saveCurrentFrameToImage(imageToSave: currentARFrame.capturedImage, saveTo: fileURL)
+        if (saveImage) {
+            self.saveCurrentFrameToImage(imageToSave: currentARFrame.capturedImage, saveTo: fileURL)
+        }
     }
     
     func saveUIImage(imageToSave: UIImage, saveTo: URL){

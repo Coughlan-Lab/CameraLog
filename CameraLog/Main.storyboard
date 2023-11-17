@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="2hk-Ek-mZw">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="2hk-Ek-mZw">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -50,19 +52,19 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="5" minValue="1" maxValue="10" translatesAutoresizingMaskIntoConstraints="NO" id="yU5-Se-VOs">
+                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="5" minValue="1" maxValue="20" translatesAutoresizingMaskIntoConstraints="NO" id="yU5-Se-VOs">
                                 <rect key="frame" x="110" y="229" width="194" height="31"/>
                                 <connections>
                                     <action selector="frameRateChanged:" destination="9kC-gj-D0c" eventType="valueChanged" id="aBi-yr-cdZ"/>
                                 </connections>
                             </slider>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Camera Frame Rate" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wgk-eA-nmk">
-                                <rect key="frame" x="131" y="188" width="152" height="21"/>
+                                <rect key="frame" x="132" y="188" width="150.5" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Wcl-GC-Ash">
+                            <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Wcl-GC-Ash">
                                 <rect key="frame" x="124" y="728" width="166" height="54"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="35"/>
                                 <state key="normal" title="Continue &gt;"/>
@@ -76,8 +78,20 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Save Images" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PUz-fN-6Y9">
+                                <rect key="frame" x="159" y="303" width="97" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" title="SaveImages" translatesAutoresizingMaskIntoConstraints="NO" id="MsP-xV-Kpn">
+                                <rect key="frame" x="183" y="332" width="49" height="31"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </switch>
                         </subviews>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="1QW-Jj-iBd"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="1QW-Jj-iBd" firstAttribute="bottom" secondItem="Wcl-GC-Ash" secondAttribute="bottom" constant="80" id="0dy-14-btU"/>
                             <constraint firstItem="dvB-hM-TY6" firstAttribute="top" secondItem="ful-5t-GFI" secondAttribute="bottom" constant="10" id="4lf-xC-bnX"/>
@@ -94,13 +108,13 @@
                             <constraint firstItem="0Yw-hW-qtN" firstAttribute="leading" secondItem="1QW-Jj-iBd" secondAttribute="leading" constant="20" id="rxA-qG-rcv"/>
                             <constraint firstItem="0Yw-hW-qtN" firstAttribute="top" secondItem="wgk-eA-nmk" secondAttribute="bottom" constant="20" id="tlh-2b-QPK"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="1QW-Jj-iBd"/>
                     </view>
                     <navigationItem key="navigationItem" id="NNf-YH-wKx"/>
                     <connections>
                         <outlet property="ContinueButton" destination="Wcl-GC-Ash" id="2YY-Zl-dUg"/>
                         <outlet property="frameRateLbl" destination="0Yw-hW-qtN" id="8ME-Nu-gWQ"/>
                         <outlet property="frameRateSlider" destination="yU5-Se-VOs" id="BTp-XN-CDg"/>
+                        <outlet property="saveImageSwitch" destination="MsP-xV-Kpn" id="GbY-4S-iYX"/>
                         <outlet property="sessionName" destination="dvB-hM-TY6" id="RDY-2H-xj7"/>
                         <segue destination="nsC-36-VMp" kind="show" identifier="startCaptureSession" id="ceg-1b-dMq"/>
                     </connections>
@@ -120,9 +134,9 @@
                             <arskView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DSf-Vs-7oB">
                                 <rect key="frame" x="0.0" y="88" width="414" height="774"/>
                             </arskView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1qr-TB-avh">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1qr-TB-avh">
                                 <rect key="frame" x="173" y="757" width="68" height="55"/>
-                                <color key="backgroundColor" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" systemColor="systemRedColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="36"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <state key="normal" title="REC"/>
@@ -131,7 +145,8 @@
                                 </connections>
                             </button>
                         </subviews>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="fhf-CY-bJC"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="DSf-Vs-7oB" firstAttribute="top" secondItem="cio-Kk-hvB" secondAttribute="topMargin" id="EX0-JD-cuo"/>
                             <constraint firstItem="fhf-CY-bJC" firstAttribute="bottom" secondItem="DSf-Vs-7oB" secondAttribute="bottom" id="Knv-iy-9GX"/>
@@ -140,7 +155,6 @@
                             <constraint firstItem="DSf-Vs-7oB" firstAttribute="leading" secondItem="fhf-CY-bJC" secondAttribute="leading" id="oW4-BJ-IRa"/>
                             <constraint firstItem="fhf-CY-bJC" firstAttribute="bottom" secondItem="1qr-TB-avh" secondAttribute="bottom" constant="50" id="zw3-0G-dGV"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="fhf-CY-bJC"/>
                     </view>
                     <navigationItem key="navigationItem" id="u16-Ym-mX8"/>
                     <connections>
@@ -153,4 +167,12 @@
             <point key="canvasLocation" x="1472.4637681159422" y="-136.60714285714286"/>
         </scene>
     </scenes>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemRedColor">
+            <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
 </document>
